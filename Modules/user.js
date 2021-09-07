@@ -16,6 +16,9 @@ const videoSchema = mongoose.Schema({
     password: {
         type: String,
         require: true,
+    },
+    admin: {
+        type: Boolean,
     }
 })
 

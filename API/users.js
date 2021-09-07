@@ -2,29 +2,36 @@ const express = require("express");
 const { schema } = require("../Modules/user");
 const router = express.Router();
 const User = require("../Modules/user");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-router.post("/users", (req, res) => {
-    console.log('here')
-    const user = new User({
-        _id: req.body._id,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    });
-   user.save()
-    .then(result => {
+router.post("/users", async (req, res) => {
+    try
+    {
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
+        const user = new User({
+            _id: req.body._id,
+            name: req.body.name,
+            email: req.body.email,
+            password: hashPassword,
+            admin: req.body.admin,
+        });
+        user.save()
+        .then(result => {
             console.log(result);
             res.status(201).json({
                 _id: result._id,
                 name: result.name,
                 email: result.email,
                 password: result.password,
+                admin: result.admin,
             });
-    })
-    .catch(err => {
+        })
+    }
+    catch{
         console.log(err)
         res.status(500).send(err)
-    });
+    }
 });
 
 router.get("/users", async (req, res) => {
@@ -41,6 +48,7 @@ router.get("/users", async (req, res) => {
                         _id: result._id,
                         name: result.name,
                         email: result.email,
+                        admin: result.admin,
                     }
                 }
             })

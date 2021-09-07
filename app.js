@@ -2,10 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const videosRouter = require("./API/videos");
 const usersRouter = require("./API/users");
 const sessionsRouter = require("./API/sessions");
 
+app.use(express.json());
 mongoose.connect(
     "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false", 
     { useNewUrlParser: true }
