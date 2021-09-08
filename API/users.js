@@ -2,7 +2,6 @@ const express = require("express");
 const { schema } = require("../Modules/user");
 const router = express.Router();
 const User = require("../Modules/user");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 router.post("/users", async (req, res) => {
@@ -60,66 +59,5 @@ router.get("/users", async (req, res) => {
         })
     });
 })
-
-// router.get("/videos/:id", (req, res) => {
-//     Video.findById(req.params.id)
-//     .exec()
-//     .then(result => {
-//         console.log(result);
-//         if(!result) {
-//             return res.status(404).json({
-//               message: "ID not found"
-//             })
-//           }
-//         res.status(200).json({
-//             _id: result._id,
-//             name: result.name,
-//             description: result.description,
-//             thumbnail: result.thumbnail,
-//             videoUrl: result.videoUrl
-//         });
-//     })
-//     .catch(err => {
-//         res.status(500).json({
-//             error: err
-//         })
-//     });
-// });
-
-// router.delete("/videos/:id", async (req, res) => {
-//     Video.remove({_id :req.params.id})
-//     .exec()
-//     .then(() => {
-//         res.status(200).json({
-//             message: "Video Deleted"
-//         })
-//     })
-//     .catch(err => {
-//         res.status(500).json({
-//             error: err
-//         })
-//     });
-// });
-
-// router.put("/videos/:id", (req, res, next) => {
-//     const id = req.params.id;
-//     const updateOps = req.body;
-//     Video.updateOne({ _id: id }, { $set: updateOps })
-//       .exec()
-//       .then((result) => {
-//         res.status(200).json({
-//           message: "Video Updated",
-//           request: {
-//             type: "GET",
-//             url: "http://localhost:3000/api/videos/" + id,
-//           },
-//         });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         res.status(500).json({ error: err });
-//       });
-// })
-
 
 module.exports = router;
