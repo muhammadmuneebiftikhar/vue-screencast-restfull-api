@@ -19,6 +19,9 @@ const videoSchema = mongoose.Schema({
     },
     admin: {
         type: Boolean,
+    },
+    token: {
+        type: String,
     }
 })
 

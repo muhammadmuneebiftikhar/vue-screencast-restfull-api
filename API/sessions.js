@@ -16,16 +16,15 @@ router.post("/sessions", async (req, res) => {
                     })
                 }
                 if(result) {
-                    const token = jwt.sign({
-                        email: user.email,
-                        userId: user._id,
-                    }, process.env.ACCESS_TOKEN_SECRET, {
-                        expiresIn: "1h"
-                    },
-                    )
+                    // const token = jwt.sign({
+                    //     email: user.email,
+                    //     userId: user._id,
+                    // }, process.env.ACCESS_TOKEN_SECRET, {
+                    //     expiresIn: "1h"
+                    // },
+                    // )
                     return res.status(200).json ({
-                        user,
-                        token: token
+                        user
                     })
                 }
             })
