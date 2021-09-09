@@ -6,26 +6,29 @@ const User = require("../Modules/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-router.post("/users", async (req, res) => {
+router.post("/users",async (req, res) => {
     try
     {
         const hashPassword = await bcrypt.hash(req.body.password, 10);
+        const token = jwt.sign({
+            _id: req.body._id,
+            name: req.body.name,
+            email: req.body.email,
+            admin: req.body.admin,
+        }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: "1h"
+        },
+        )
         const user = new User({
             _id: req.body._id,
             name: req.body.name,
             email: req.body.email,
             password: hashPassword,
             admin: req.body.admin,
+            token: token,
         });
         user.save()
         .then(result => {
-            const token = jwt.sign({
-                email: result.email,
-                userId: result._id,
-            }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: "1h"
-            },
-            )
             console.log(result);
             res.status(201).json({
                 _id: result._id,
