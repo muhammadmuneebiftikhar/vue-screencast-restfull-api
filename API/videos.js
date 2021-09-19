@@ -4,8 +4,7 @@ const router = express.Router();
 const Video = require("../Modules/video");
 const checkAuth = require("../Middleware/checkAuth");
 
-router.post("/videos", checkAuth, (req, res) => {
-    console.log('here')
+router.post("/videos", (req, res) => {
     const video = new Video({
         _id: req.body._id,
         name: req.body.name,
@@ -15,7 +14,6 @@ router.post("/videos", checkAuth, (req, res) => {
     });
    video.save()
     .then(result => {
-            console.log(result);
             res.status(201).json({
                 _id: result._id,
                 name: result.name,
@@ -25,7 +23,6 @@ router.post("/videos", checkAuth, (req, res) => {
             });
     })
     .catch(err => {
-        console.log(err)
         res.status(500).send(err)
     });
 });
@@ -79,7 +76,7 @@ router.get("/videos/:id", (req, res) => {
     });
 });
 
-router.delete("/videos/:id", checkAuth , async (req, res) => {
+router.delete("/videos/:id", async (req, res) => {
     Video.deleteOne({_id :req.params.id})
     .exec()
     .then(() => {
@@ -94,7 +91,7 @@ router.delete("/videos/:id", checkAuth , async (req, res) => {
     });
 });
 
-router.put("/videos/:id", checkAuth ,(req, res, next) => {
+router.put("/videos/:id", (req, res, next) => {
     const id = req.params.id;
     const updateOps = req.body;
     Video.updateOne({ _id: id }, { $set: updateOps })

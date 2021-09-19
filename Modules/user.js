@@ -3,26 +3,30 @@ const mongoose = require("mongoose");
 const videoSchema = mongoose.Schema({
     _id: {
         type: Number,
-        require: true,
+        required: true,
     },
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
-        require: true,
+        required: true,
     },
     password: {
         type: String,
-        require: true,
+        required: true,
     },
     admin: {
         type: Boolean,
+        required: true,
     },
     token: {
         type: String,
-    }
+    },
+    played_video_ids: {
+        type: Array,
+    },
 })
 
 module.exports = mongoose.model("user", videoSchema);
